@@ -9,27 +9,44 @@ const UsuarioSchema = Schema({
         required: [true, 'El correo es obligatorio'],
         unique: true
     },
-    password:{
+    correo: {
         type: String,
-        required: [true, 'La contrasenia es obligatoria']
+        required: [true, 'El correo es obligatorio'],
+        unique: true
     },
-    rol:{
+    password: {
+        type: String,
+        required: [true, 'La contrasena es obligatoria']
+        
+    },
+    img: {
+        type: String
+              
+    },
+    rol: {
         type: String,
         required: true,
-        emun:['ADMIN_ROLE', 'USER_ROLE']
+        emun: ['ADMIN_ROLE', 'USER_ROLE']
+              
     },
-    estado:{
+    estado: {
         type: Boolean,
         default: true
+              
     },
-    google:{
+    google: {
         type: Boolean,
         default: false
+              
     },
+
 });
-//esta función quita los campos _v y password y el resto los almacena en variable usuario
-UsuarioSchema.methods.toJSON=function(){
-    const{__v, password, ...usuario}=this.toObject();
+//esta funcion quita los campos __v y password y el resto los almacena en variable usuario
+UsuarioSchema.methods.toJSON = function(){
+    const {__v,password,_id, ...usuario } = this.toObject();
+    usuario.uid=_id;
     return usuario;
 }
-module.exports=model('Usuario', UsuarioSchema);
+
+
+module.exports = model('Usuario',UsuarioSchema);
